@@ -4,229 +4,271 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Al Majlis Digital</title>
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS RESET & VARIABLES */
+        /* --- Design System & CSS Variables --- */
+        :root {
+            --bg-sand: #F5F5DC;
+            --accent-gold: #D4AF37;
+            --accent-teal: #008080;
+            --accent-teal-glow: rgba(0, 128, 128, 0.4);
+            --flag-green: #00732F;
+            --flag-red: #FF0000;
+            --text-dark: #2C2C2C;
+            --text-light: #555555;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-timer-running: rgba(230, 245, 235, 0.85);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- Reset & Base Styles --- */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        :root {
-            --bg-color: #F5F5DC;
-            --accent-gold: #D4AF37;
-            --accent-teal: #008080;
-            --glow-turquoise: #40E0D0;
-            --text-dark: #2C2C2C;
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --flag-green: #00732F;
-            --timer-active-bg: rgba(230, 245, 235, 0.8);
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg-sand);
+            background-image: radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 40%),
+                              radial-gradient(circle at 80% 80%, rgba(0, 128, 128, 0.05) 0%, transparent 40%);
             color: var(--text-dark);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 2rem;
             opacity: 0;
             animation: fadeIn 1.2s ease-out forwards;
         }
 
-        /* ANIMATIONS */
+        /* --- Keyframes Animation --- */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* HEADER */
+        /* --- Layout Header --- */
         header {
             text-align: center;
-            margin-bottom: 3rem;
+            padding: 40px 20px 20px;
         }
 
         header h1 {
             font-size: 2.5rem;
-            color: var(--accent-teal);
-            text-transform: uppercase;
-            letter-spacing: 2px;
             font-weight: 700;
+            color: var(--accent-teal);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
             position: relative;
             display: inline-block;
-            padding-bottom: 0.5rem;
         }
 
         header h1::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -8px;
             left: 25%;
             width: 50%;
             height: 2px;
             background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
         }
 
-        /* DASHBOARD GRID */
-        .dashboard-grid {
+        /* --- Main Dashboard Grid --- */
+        main {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            flex-grow: 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto w-100;
-            width: 100%;
-            flex-grow: 1;
+            gap: 30px;
             align-content: start;
         }
 
-        /* CARDS */
+        /* --- Glassmorphic Card Styling --- */
         .card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 2px solid var(--accent-gold);
             border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(44, 44, 44, 0.05);
+            transition: var(--transition-smooth);
             display: flex;
             flex-direction: column;
-            min-height: 400px;
+            min-height: 380px;
         }
 
         .card:hover {
-            border-color: var(--glow-turquoise);
-            box-shadow: 0 0 20px rgba(64, 224, 208, 0.4), 0 8px 32px rgba(0, 0, 0, 0.05);
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 20px var(--accent-teal-glow), 0 12px 40px 0 rgba(0, 128, 128, 0.1);
             transform: translateY(-4px);
         }
 
         .card h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--accent-teal);
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(0, 128, 128, 0.1);
-            padding-bottom: 0.5rem;
+            margin-bottom: 20px;
             font-weight: 600;
+            border-bottom: 1px solid rgba(214, 175, 87, 0.3);
+            padding-bottom: 10px;
         }
 
-        /* CARD 1: DAILY KARAM (TO-DO) */
-        .input-group {
+        /* --- CARD 1: Daily Karam Task App --- */
+        .karam-input-group {
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        .input-group input {
+        .karam-input-group input {
             flex-grow: 1;
-            padding: 0.75rem 1rem;
+            padding: 12px 16px;
             border: 1px solid rgba(0, 128, 128, 0.3);
             border-radius: 8px;
-            font-family: 'Inter', sans-serif;
             background: rgba(255, 255, 255, 0.8);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-dark);
             outline: none;
-            transition: border-color 0.3s;
+            transition: var(--transition-smooth);
         }
 
-        .input-group input:focus {
+        .karam-input-group input:focus {
             border-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.15);
         }
 
         .btn-add {
             background-color: var(--accent-teal);
-            color: white;
+            color: #ffffff;
             border: none;
-            padding: 0.75rem 1.5rem;
+            padding: 12px 20px;
+            font-weight: 600;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: 600;
+            transition: var(--transition-smooth);
             font-family: 'Inter', sans-serif;
-            transition: all 0.1s ease;
-            box-shadow: 0 2px 4px rgba(0, 128, 128, 0.2);
+            box-shadow: 0 2px 5px rgba(0, 128, 128, 0.2);
+        }
+
+        .btn-add:hover {
+            background-color: #006666;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 128, 128, 0.3);
         }
 
         .btn-add:active {
-            transform: scale(0.95);
-            box-shadow: 0 1px 2px rgba(0, 128, 128, 0.1);
+            transform: translateY(1px);
+            box-shadow: 0 1px 2px rgba(0, 128, 128, 0.2);
         }
 
-        .todo-list {
+        .karam-list {
             list-style: none;
             overflow-y: auto;
-            max-height: 250px;
-            padding-right: 0.25rem;
+            max-height: 220px;
+            padding-right: 5px;
         }
 
-        .todo-list li {
-            padding: 0.75rem 1rem;
+        .karam-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .karam-list::-webkit-scrollbar-thumb {
+            background: rgba(214, 175, 87, 0.5);
+            border-radius: 10px;
+        }
+
+        .karam-item {
             background: rgba(255, 255, 255, 0.5);
-            margin-bottom: 0.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            user-select: none;
+            padding: 12px 15px;
             border-left: 3px solid var(--accent-gold);
+            border-radius: 4px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+            user-select: none;
             word-wrap: break-word;
         }
 
-        .todo-list li:hover {
+        .karam-item:hover {
             background: rgba(255, 255, 255, 0.9);
+            padding-left: 18px;
         }
 
-        .todo-list li.completed {
+        .karam-item.completed {
             text-decoration: line-through;
+            color: var(--text-light);
+            border-left-color: var(--text-light);
             opacity: 0.6;
-            border-left-color: #888;
         }
 
-        /* CARD 2: REFLECTION CLOCK (TIMER) */
+        /* --- CARD 2: Reflection Clock (Timer) --- */
         .card.timer-running {
-            background-color: var(--timer-active-bg);
+            background: var(--glass-timer-running);
+            border-color: var(--flag-green);
         }
 
         .timer-display {
             font-size: 3.5rem;
-            font-weight: 700;
+            font-weight: 300;
             text-align: center;
-            margin: 2rem 0;
             color: var(--text-dark);
+            margin: 20px 0;
             font-variant-numeric: tabular-nums;
+            letter-spacing: -1px;
         }
 
         .timer-controls {
             display: flex;
             justify-content: center;
-            gap: 0.75rem;
-            margin-bottom: 2rem;
+            gap: 12px;
+            margin-bottom: 25px;
         }
 
         .btn-timer {
             font-family: 'Inter', sans-serif;
-            padding: 0.6rem 1.2rem;
+            padding: 10px 18px;
             border-radius: 6px;
+            border: 1px solid rgba(44, 44, 44, 0.1);
+            background: #ffffff;
             cursor: pointer;
             font-weight: 500;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            transition: all 0.2s;
+            font-size: 0.9rem;
+            transition: var(--transition-smooth);
         }
 
-        .btn-start { background-color: var(--accent-teal); color: white; }
-        .btn-pause { background-color: #6c757d; color: white; }
-        .btn-reset { background-color: transparent; color: var(--text-dark); border-color: var(--text-dark); }
+        .btn-timer:hover {
+            background: #fdfdfd;
+            border-color: var(--accent-gold);
+            transform: translateY(-1px);
+        }
 
-        .btn-timer:hover { opacity: 0.9; }
-        .btn-timer:active { transform: scale(0.96); }
+        .btn-timer#startBtn {
+            background-color: var(--accent-teal);
+            color: white;
+            border: none;
+        }
+        .btn-timer#startBtn:hover {
+            background-color: #006666;
+        }
 
         .progress-container {
             width: 100%;
-            height: 8px;
+            height: 6px;
             background-color: rgba(0, 0, 0, 0.05);
-            border-radius: 4px;
+            border-radius: 3px;
             overflow: hidden;
             margin-top: auto;
         }
@@ -236,62 +278,68 @@
             width: 100%;
             background-color: var(--flag-green);
             transition: width 1s linear;
+            border-radius: 3px;
         }
 
-        /* CARD 3: FOUNDERS WISDOM */
-        .quote-container {
+        /* --- CARD 3: Founders Wisdom --- */
+        .wisdom-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             flex-grow: 1;
-            padding-bottom: 1rem;
+            padding: 10px 5px;
         }
 
         .quote-text {
             font-size: 1.1rem;
             line-height: 1.6;
-            font-style: italic;
-            margin-bottom: 1.5rem;
             color: var(--text-dark);
+            font-style: italic;
+            margin-bottom: 15px;
             position: relative;
         }
 
         .quote-author {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--accent-teal);
             text-align: right;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
-        /* FOOTER */
+        /* --- Footer Styles --- */
         footer {
-            margin-top: 3rem;
             text-align: center;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 30px 20px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(214, 175, 87, 0.2);
         }
 
         .arabic-word {
             font-style: italic;
-            font-size: 1.1rem;
-            color: var(--accent-teal);
+            color: var(--text-light);
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
         }
 
         .arabic-word span {
+            color: var(--accent-teal);
             font-weight: 600;
-            color: var(--accent-gold);
         }
 
-        /* RESPONSIVE LAYOUT */
-        @media (max-width: 992px) {
-            .dashboard-grid {
+        /* --- Responsive Design (Mobile Breakpoint) --- */
+        @media (max-width: 900px) {
+            main {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 20px;
             }
+            
             .card {
                 min-height: auto;
+            }
+
+            header h1 {
+                font-size: 2rem;
             }
         }
     </style>
@@ -302,34 +350,232 @@
         <h1>Al Majlis Digital</h1>
     </header>
 
-    <main class="dashboard-grid">
-        <!-- CARD 1: DAILY KARAM -->
-        <section class="card" id="karam-card">
+    <main>
+        <section class="card" id="karamCard">
             <h2>Daily Karam</h2>
-            <div class="input-group">
-                <input type="text" id="todo-input" placeholder="Enter act of kindness..." maxlength="60">
-                <button class="btn-add" id="todo-add-btn">Add</button>
+            <div class="karam-input-group">
+                <input type="text" id="karamInput" placeholder="Enter an act of kindness..." maxlength="60">
+                <button class="btn-add" id="addKaramBtn">Add</button>
             </div>
-            <ul class="todo-list" id="todo-list"></ul>
+            <ul class="karam-list" id="karamList"></ul>
         </section>
 
-        <!-- CARD 2: REFLECTION CLOCK -->
-        <section class="card" id="timer-card">
+        <section class="card" id="timerCard">
             <h2>Reflection Clock</h2>
-            <div class="timer-display" id="timer-display">25:00</div>
+            <div class="timer-display" id="timerDisplay">25:00</div>
             <div class="timer-controls">
-                <button class="btn-timer btn-start" id="timer-start">Start</button>
-                <button class="btn-timer btn-pause" id="timer-pause">Pause</button>
-                <button class="btn-timer btn-reset" id="timer-reset">Reset</button>
+                <button class="btn-timer" id="startBtn">Start</button>
+                <button class="btn-timer" id="pauseBtn">Pause</button>
+                <button class="btn-timer" id="resetBtn">Reset</button>
             </div>
             <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-bar" id="progressBar"></div>
             </div>
         </section>
 
-        <!-- CARD 3: FOUNDERS WISDOM -->
-        <section class="card" id="wisdom-card">
+        <section class="card" id="wisdomCard">
             <h2>Founders Wisdom</h2>
-            <div class="quote-container">
-                <p class="quote-text" id="quote-text">Loading wisdom...</p>
-                <p class="quote-author" id="quote-author"></p>
+            <div class="wisdom-container">
+                <p class="quote-text" id="quoteText">"Loading profound wisdom..."</p>
+                <p class="quote-author" id="quoteAuthor"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p class="arabic-word">Word of the Day: <span>Asalah</span> — Authenticity / Heritage — (Ah-sah-lah)</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // ==========================================
+            // 1. DAILY KARAM LOGIC (Local Storage Enabled)
+            // ==========================================
+            const karamInput = document.getElementById('karamInput');
+            const addKaramBtn = document.getElementById('addKaramBtn');
+            const karamList = document.getElementById('karamList');
+            
+            let karamItems = JSON.parse(localStorage.getItem('actsOfKaram')) || [];
+
+            function saveKaram() {
+                localStorage.setItem('actsOfKaram', JSON.stringify(karamItems));
+            }
+
+            function renderKaram() {
+                karamList.innerHTML = '';
+                karamItems.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    li.className = `karam-item ${item.completed ? 'completed' : ''}`;
+                    li.textContent = item.text;
+                    
+                    // Single Click: Toggle cross-out
+                    li.addEventListener('click', (e) => {
+                        // Prevent triggering click if a double click is imminent
+                        if (e.detail === 1) {
+                            setTimeout(() => {
+                                if (!li.dataset.doubleClicked) {
+                                    item.completed = !item.completed;
+                                    saveKaram();
+                                    renderKaram();
+                                }
+                                delete li.dataset.doubleClicked;
+                            }, 200);
+                        }
+                    });
+
+                    // Double Click: Remove item
+                    li.addEventListener('dblclick', () => {
+                        li.dataset.doubleClicked = 'true';
+                        karamItems.splice(index, 1);
+                        saveKaram();
+                        renderKaram();
+                    });
+
+                    karamList.appendChild(li);
+                });
+            }
+
+            function addKaramItem() {
+                const text = karamInput.value.trim();
+                if (text !== '') {
+                    karamItems.push({ text: text, completed: false });
+                    karamInput.value = '';
+                    saveKaram();
+                    renderKaram();
+                }
+            }
+
+            addKaramBtn.addEventListener('click', addKaramItem);
+            karamInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addKaramItem();
+            });
+
+            // Initial load of items
+            renderKaram();
+
+
+            // ==========================================
+            // 2. REFLECTION CLOCK LOGIC (Timer & Progress)
+            // ==========================================
+            const timerDisplay = document.getElementById('timerDisplay');
+            const timerCard = document.getElementById('timerCard');
+            const progressBar = document.getElementById('progressBar');
+            const startBtn = document.getElementById('startBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const resetBtn = document.getElementById('resetBtn');
+
+            const TOTAL_TIME = 25 * 60; // 25 minutes in seconds
+            let timeRemaining = TOTAL_TIME;
+            let timerInterval = null;
+
+            function updateTimerDisplay() {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Progress Bar Dynamic Emptying calculation
+                const percentage = (timeRemaining / TOTAL_TIME) * 100;
+                progressBar.style.width = `${percentage}%`;
+            }
+
+            function startTimer() {
+                if (timerInterval !== null) return; // Prevent multiple countdown loops
+                
+                timerCard.classList.add('timer-running');
+                timerInterval = setInterval(() => {
+                    if (timeRemaining > 0) {
+                        timeRemaining--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        timerCard.classList.remove('timer-running');
+                        alert("Time for reflection has concluded.");
+                        resetTimer();
+                    }
+                }, 1000);
+            }
+
+            function pauseTimer() {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                timerCard.classList.remove('timer-running');
+            }
+
+            function resetTimer() {
+                pauseTimer();
+                timeRemaining = TOTAL_TIME;
+                updateTimerDisplay();
+            }
+
+            startBtn.addEventListener('click', startTimer);
+            pauseBtn.addEventListener('click', pauseTimer);
+            resetBtn.addEventListener('click', resetTimer);
+
+            // Initialize progress bar width display
+            updateTimerDisplay();
+
+
+            // ==========================================
+            // 3. FOUNDERS WISDOM LOGIC (JSON Quotes)
+            // ==========================================
+            const quotesData = [
+                {
+                    "quote": "He who does not know his past cannot appreciate the present or the future.",
+                    "author": "Sheikh Zayed bin Sultan Al Nahyan"
+                },
+                {
+                    "quote": "History is a continuous chain of events. The present is only an extension of the past.",
+                    "author": "Sheikh Zayed bin Sultan Al Nahyan"
+                },
+                {
+                    "quote": "Arab oil can never be dearer than Arab blood.",
+                    "author": "Sheikh Zayed bin Sultan Al Nahyan"
+                },
+                {
+                    "quote": "The future belongs to those who can imagine it, design it, and execute it.",
+                    "author": "Sheikh Mohammed bin Rashid Al Maktoum"
+                },
+                {
+                    "quote": "We are building a new reality for our people, a new future for our children, and a new model of development.",
+                    "author": "Sheikh Mohammed bin Rashid Al Maktoum"
+                },
+                {
+                    "quote": "Wealth is not money. Wealth lies in men. This is where true power lies, the power we value.",
+                    "author": "Sheikh Zayed bin Sultan Al Nahyan"
+                },
+                {
+                    "quote": "To take risks and fail is not a failure. The real failure is to fear taking risks and remain stagnant.",
+                    "author": "Sheikh Mohammed bin Rashid Al Maktoum"
+                },
+                {
+                    "quote": "The race for excellence has no finish line.",
+                    "author": "Sheikh Mohammed bin Rashid Al Maktoum"
+                },
+                {
+                    "quote": "Education is like a lantern which lights your way in a dark alley.",
+                    "author": "Sheikh Zayed bin Sultan Al Nahyan"
+                },
+                {
+                    "quote": "The UAE is an integral part of the world, working proactively to create a sustainable and bright future for all.",
+                    "author": "Sheikh Mohammed bin Rashid Al Maktoum"
+                }
+            ];
+
+            function loadRandomQuote() {
+                const quoteTextElem = document.getElementById('quoteText');
+                const quoteAuthorElem = document.getElementById('quoteAuthor');
+                
+                const randomIndex = Math.floor(Math.random() * quotesData.length);
+                const selectedQuote = quotesData[randomIndex];
+                
+                quoteTextElem.textContent = `"${selectedQuote.quote}"`;
+                quoteAuthorElem.textContent = `— ${selectedQuote.author}`;
+            }
+
+            loadRandomQuote();
+        });
+    </script>
+</body>
+</html>
