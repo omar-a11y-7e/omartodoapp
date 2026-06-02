@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al Majlis Digital</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS RESET & VARIABLES */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #F5F5DC;
+            --accent-gold: #D4AF37;
+            --accent-teal: #008080;
+            --glow-turquoise: #40E0D0;
+            --text-dark: #2C2C2C;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --flag-green: #00732F;
+            --timer-active-bg: rgba(230, 245, 235, 0.8);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem;
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--accent-teal);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        header h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        /* DASHBOARD GRID */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto w-100;
+            width: 100%;
+            flex-grow: 1;
+            align-content: start;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid var(--accent-gold);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+        }
+
+        .card:hover {
+            border-color: var(--glow-turquoise);
+            box-shadow: 0 0 20px rgba(64, 224, 208, 0.4), 0 8px 32px rgba(0, 0, 0, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            color: var(--accent-teal);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 128, 128, 0.1);
+            padding-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* CARD 1: DAILY KARAM (TO-DO) */
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group input {
+            flex-grow: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid rgba(0, 128, 128, 0.3);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            background: rgba(255, 255, 255, 0.8);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--accent-teal);
+        }
+
+        .btn-add {
+            background-color: var(--accent-teal);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.1s ease;
+            box-shadow: 0 2px 4px rgba(0, 128, 128, 0.2);
+        }
+
+        .btn-add:active {
+            transform: scale(0.95);
+            box-shadow: 0 1px 2px rgba(0, 128, 128, 0.1);
+        }
+
+        .todo-list {
+            list-style: none;
+            overflow-y: auto;
+            max-height: 250px;
+            padding-right: 0.25rem;
+        }
+
+        .todo-list li {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            border-left: 3px solid var(--accent-gold);
+            word-wrap: break-word;
+        }
+
+        .todo-list li:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .todo-list li.completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+            border-left-color: #888;
+        }
+
+        /* CARD 2: REFLECTION CLOCK (TIMER) */
+        .card.timer-running {
+            background-color: var(--timer-active-bg);
+        }
+
+        .timer-display {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--text-dark);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-timer {
+            font-family: 'Inter', sans-serif;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+
+        .btn-start { background-color: var(--accent-teal); color: white; }
+        .btn-pause { background-color: #6c757d; color: white; }
+        .btn-reset { background-color: transparent; color: var(--text-dark); border-color: var(--text-dark); }
+
+        .btn-timer:hover { opacity: 0.9; }
+        .btn-timer:active { transform: scale(0.96); }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: auto;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 100%;
+            background-color: var(--flag-green);
+            transition: width 1s linear;
+        }
+
+        /* CARD 3: FOUNDERS WISDOM */
+        .quote-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+            padding-bottom: 1rem;
+        }
+
+        .quote-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            position: relative;
+        }
+
+        .quote-author {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent-teal);
+            text-align: right;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .arabic-word {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--accent-teal);
+        }
+
+        .arabic-word span {
+            font-weight: 600;
+            color: var(--accent-gold);
+        }
+
+        /* RESPONSIVE LAYOUT */
+        @media (max-width: 992px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .card {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Al Majlis Digital</h1>
+    </header>
+
+    <main class="dashboard-grid">
+        <!-- CARD 1: DAILY KARAM -->
+        <section class="card" id="karam-card">
+            <h2>Daily Karam</h2>
+            <div class="input-group">
+                <input type="text" id="todo-input" placeholder="Enter act of kindness..." maxlength="60">
+                <button class="btn-add" id="todo-add-btn">Add</button>
+            </div>
+            <ul class="todo-list" id="todo-list"></ul>
+        </section>
+
+        <!-- CARD 2: REFLECTION CLOCK -->
+        <section class="card" id="timer-card">
+            <h2>Reflection Clock</h2>
+            <div class="timer-display" id="timer-display">25:00</div>
+            <div class="timer-controls">
+                <button class="btn-timer btn-start" id="timer-start">Start</button>
+                <button class="btn-timer btn-pause" id="timer-pause">Pause</button>
+                <button class="btn-timer btn-reset" id="timer-reset">Reset</button>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+        </section>
+
+        <!-- CARD 3: FOUNDERS WISDOM -->
+        <section class="card" id="wisdom-card">
+            <h2>Founders Wisdom</h2>
+            <div class="quote-container">
+                <p class="quote-text" id="quote-text">Loading wisdom...</p>
+                <p class="quote-author" id="quote-author"></p>
